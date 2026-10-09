@@ -16,9 +16,8 @@ jobs:
           Invoke-RestMethod -Uri https://get.scoop.sh -OutFile install.ps1
           .\install.ps1 -RunAsAdmin
           Join-Path (Resolve-Path ~).Path "scoop\shims" >> $env:GITHUB_PATH
-      - name: install claudette from this checkout
+      - name: install claudette from this checkout's manifest
         shell: pwsh
         run: |
-          scoop bucket add mrdushidush "$env:GITHUB_WORKSPACE"
-          scoop install mrdushidush/claudette
+          scoop install "$env:GITHUB_WORKSPACEucket\claudette.json"
           claudette --version
