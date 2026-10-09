@@ -21,3 +21,20 @@ jobs:
         run: |
           scoop install "$env:GITHUB_WORKSPACE/bucket/claudette.json"
           claudette --version
+  readme-commands:
+    # The two lines claudette's README tells Windows users to run, verbatim.
+    if: github.event_name != 'pull_request'
+    runs-on: windows-latest
+    steps:
+      - name: install scoop
+        shell: pwsh
+        run: |
+          Invoke-RestMethod -Uri https://get.scoop.sh -OutFile install.ps1
+          .\install.ps1 -RunAsAdmin
+          Join-Path (Resolve-Path ~).Path "scoop\shims" >> $env:GITHUB_PATH
+      - name: the README's commands
+        shell: pwsh
+        run: |
+          scoop bucket add mrdushidush https://github.com/mrdushidush/scoop-bucket
+          scoop install mrdushidush/claudette
+          claudette --version
