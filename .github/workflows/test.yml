@@ -19,5 +19,5 @@ jobs:
       - name: install claudette from this checkout's manifest
         shell: pwsh
         run: |
-          scoop install "$env:GITHUB_WORKSPACEucket\claudette.json"
+          scoop install "$env:GITHUB_WORKSPACE/bucket/claudette.json"
           claudette --version
